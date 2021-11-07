@@ -1,5 +1,4 @@
-export const atbashChipper = (str) => {
-  // 'abc'
+export const atbashCipher = (str) => {
   let resultStr = ''
   for (let i = 0; i < str.length; i++) {
     const newChar = decodeChar(str[i].charCodeAt(0))

@@ -3,14 +3,14 @@ import { promisify } from 'util'
 
 import fs from 'fs'
 import { Transform } from 'stream'
-import { coding } from './caesarChipper.js'
+import { caesarCipher } from './caesarCipher.js'
 
 const pipelineAsync = promisify(pipeline)
 
 const transformData = (shift) => {
   return new Transform({
     transform(chunk, encoding, cb) {
-      let result = coding(chunk.toString(), shift)
+      let result = caesarCipher(chunk.toString(), shift)
       this.push('result: ' + result + '\n')
       cb()
     }
@@ -38,7 +38,7 @@ export const validateFileExisting = async (input, output) => {
   }
 }
 
-export const runStream = async (input, output, shift, action) => {
+export const runStream = async (input, output, config) => {
   let readStream, writeStream
   if (input) {
     readStream = fs.createReadStream(input, () => {})
@@ -53,9 +53,5 @@ export const runStream = async (input, output, shift, action) => {
   } else {
     writeStream = process.stdout
   }
-  await pipelineAsync(
-    readStream,
-    transformData(action === 'encode' ? shift : -shift),
-    writeStream
-  )
+  await pipelineAsync(readStream, transformData(config), writeStream)
 }

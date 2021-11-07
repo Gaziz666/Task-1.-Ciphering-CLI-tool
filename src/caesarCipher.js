@@ -1,4 +1,4 @@
-export const coding = (text, shift) => {
+export const caesarCipher = (text, shift) => {
   const arrOfText = text.split('').map((char) => char.charCodeAt(0))
   const encodingArr = []
   for (let i = 0; i < arrOfText.length; i++) {
