@@ -3,14 +3,14 @@ import { promisify } from 'util'
 
 import fs from 'fs'
 import { Transform } from 'stream'
-import { caesarCipher } from './caesarCipher.js'
+import { decodeText } from './decodeText.js'
 
 const pipelineAsync = promisify(pipeline)
 
-const transformData = (shift) => {
+const transformData = (config) => {
   return new Transform({
     transform(chunk, encoding, cb) {
-      let result = caesarCipher(chunk.toString(), shift)
+      let result = decodeText(chunk.toString(), config)
       this.push('result: ' + result + '\n')
       cb()
     }
