@@ -10,9 +10,10 @@ const decode = {
 }
 //[A, C1, R0]
 export const decodeText = (text, config) => {
-  let result = text
-  config.forEach((item, index) => {
-    result = decode[item](result)
-  })
-  return result
+  // let result = text
+  // config.forEach((item, index) => {
+  // result = decode[item](result)
+  // })
+  // return result
+  return decode[config](text)
 }

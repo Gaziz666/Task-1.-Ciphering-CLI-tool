@@ -12,7 +12,6 @@ export const parcArgs = () => {
   for (let i = 0; i < configArr.length; i++) {
     validateConfig(configArr[i])
   }
-  console.log(config, input, output)
   return { config: configArr, input, output }
 }
 

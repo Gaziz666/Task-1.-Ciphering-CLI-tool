@@ -1,17 +1,12 @@
-import { pipeline } from 'stream'
-import { promisify } from 'util'
-
 import fs from 'fs'
-import { Transform } from 'stream'
+import { Transform, pipeline } from 'stream'
 import { decodeText } from './decodeText.js'
-
-const pipelineAsync = promisify(pipeline)
 
 const transformData = (config) => {
   return new Transform({
     transform(chunk, encoding, cb) {
       let result = decodeText(chunk.toString(), config)
-      this.push('result: ' + result + '\n')
+      this.push(result)
       cb()
     }
   })
@@ -53,5 +48,13 @@ export const runStream = async (input, output, config) => {
   } else {
     writeStream = process.stdout
   }
-  await pipelineAsync(readStream, transformData(config), writeStream)
+  await pipeline(
+    readStream,
+    ...config.map((item) => {
+      return transformData(item)
+    }),
+
+    writeStream,
+    () => {}
+  )
 }
