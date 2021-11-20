@@ -1,4 +1,5 @@
-import { findConfig, findInput, findOutput, validateAction } from "../cli";
+import { findConfig, findInput, findOutput, validateAction, validateConfig } from "../cli";
+const mockExit = jest.spyOn(process, 'exit').mockImplementation(() => {})
 
 describe('parc process.arg', () => {
   const input = 'input'
@@ -7,7 +8,6 @@ describe('parc process.arg', () => {
   const argsConfig = ['-c', config, '--config', config]
   const argsInput = ['-i', input, '--input', input]
   const argsOutput = ['-o', output, '--output', output]
-  const mockExit = jest.spyOn(process, 'exit').mockImplementation(() => {})
 
 
   test('find config arg -c', () => {
@@ -51,8 +51,29 @@ describe('parc process.arg', () => {
 });
 
 describe('validate action and config', () => {
-  test('validate action', () => {
+  test('validate action command', () => {
     const action = 'C1'
     expect(validateAction(action)).toBe()
   })
+
+  test('validate action other then 0 or 1', () => {
+    validateAction('a2')
+    expect(mockExit).toHaveBeenCalledWith(1)
+  });
+
+  const testConfig = 'A-C1-C0-R1-A1-B'
+  const configArr = testConfig.split('-')
+  for (let i = 0; i < configArr.length; i++) {
+    if(configArr[i] === 'A1') {
+      validateConfig(configArr[i])
+      expect(mockExit).toHaveBeenCalledWith(1)
+      continue
+    }
+    if(configArr[i] === 'B') {
+      validateConfig(configArr[i])
+      expect(mockExit).toHaveBeenCalledWith(1)
+      continue
+    }
+    expect(validateConfig(configArr[i])).toBe()
+  }
 })
