@@ -8,12 +8,6 @@ const decode = {
   R0: caesarCipher(-8),
   R1: caesarCipher(8)
 }
-//[A, C1, R0]
 export const decodeText = (text, config) => {
-  // let result = text
-  // config.forEach((item, index) => {
-  // result = decode[item](result)
-  // })
-  // return result
   return decode[config](text)
 }

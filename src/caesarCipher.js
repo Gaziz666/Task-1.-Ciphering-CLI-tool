@@ -10,16 +10,6 @@ export const caesarCipher = (shift) => {
   }
 }
 
-// export const caesarCipher = (text, shift) => {
-//   const arrOfText = text.split('').map((char) => char.charCodeAt(0))
-//   const encodingArr = []
-//   for (let i = 0; i < arrOfText.length; i++) {
-//     let char = decodeChar(arrOfText[i], shift)
-//     encodingArr.push(String.fromCharCode(char))
-//   }
-//   return encodingArr.join('')
-// }
-
 const decodeChar = (letter, shift) => {
   let char
   if (letter >= 65 && letter <= 90) {

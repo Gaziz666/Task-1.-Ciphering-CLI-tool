@@ -48,13 +48,17 @@ export const runStream = async (input, output, config) => {
   } else {
     writeStream = process.stdout
   }
-  await pipeline(
-    readStream,
-    ...config.map((item) => {
-      return transformData(item)
-    }),
+  return await new Promise((resolve, reject) => {
+    pipeline(
+      readStream,
+      ...config.map((item) => {
+        return transformData(item)
+      }),
 
-    writeStream,
-    () => {}
-  )
+      writeStream,
+      () => {
+        resolve('ok')
+      }
+    )
+  })
 }
