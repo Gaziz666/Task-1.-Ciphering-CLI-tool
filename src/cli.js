@@ -15,7 +15,7 @@ export const parcArgs = () => {
   return { config: configArr, input, output }
 }
 
-function findConfig(i, arr, config) {
+export function findConfig(i, arr, config) {
   if (arr[i] === '-c' || arr[i] === '--config') {
     if (config) {
       console.error('error: flag -c or --config should not be repeated')
@@ -25,7 +25,7 @@ function findConfig(i, arr, config) {
   }
 }
 
-function findInput(i, arr, config) {
+export function findInput(i, arr, config) {
   if (arr[i] === '-i' || arr[i] === '--input') {
     if (config) {
       console.error('error: flag -i or --input should not be repeated')
@@ -35,7 +35,7 @@ function findInput(i, arr, config) {
   }
 }
 
-function findOutput(i, arr, config) {
+export function findOutput(i, arr, config) {
   if (arr[i] === '-o' || arr[i] === '--output') {
     if (config) {
       console.error('error: flag -o or --output should not be repeated')
@@ -45,7 +45,7 @@ function findOutput(i, arr, config) {
   }
 }
 
-function validateConfig(config) {
+export function validateConfig(config) {
   if (config[0] === 'C') {
     validateAction(config)
     return
@@ -65,7 +65,7 @@ function validateConfig(config) {
   process.exit(1)
 }
 
-function validateAction(action) {
+export function validateAction(action) {
   if (action.slice(1) === '1' || action.slice(1) === '0') {
     return
   }
